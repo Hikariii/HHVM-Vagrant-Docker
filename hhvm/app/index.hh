@@ -1,3 +1,3 @@
 <?hh
 
-print("Hello, jemoeder world!");
+print("Hello, world!");

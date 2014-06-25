@@ -9,6 +9,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
 
   config.vm.network :private_network, ip: "192.168.56.110"
-  #config.vm.network :forwarded_port, guest: 80, host: 8080
-  #config.vm.network :forwarded_port, guest: 49100, host: 8080
 end
