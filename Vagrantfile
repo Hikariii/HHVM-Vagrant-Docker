@@ -13,11 +13,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # v.vm.network :forwarded_port, guest: 8080, host: 80
     # config.vagrant.host = :detect
     
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    
     config.vm.define "hhvm" do |v|
+    
+        v.vm.synced_folder File.absolute_path("./hhvm/app", ROOT), "/mnt/hhvm"
+        v.vm.synced_folder ".", "/vagrant", docker__exact: true
+        
         v.vm.provider "docker" do |d|
             d.build_dir     = File.absolute_path("./hhvm", ROOT)
             d.name          = "vagrant-dockertest"
             d.cmd           = ["/sbin/my_init", "--enable-insecure-key"]
+            #d.cmd           = ["/sbin/my_init", "--enable-insecure-key"]
             d.ports         = ["8080:80"]
             #d.create_args   = ["-p", "127.0.0.1:49100:80"]
             #comment next line: https://github.com/mitchellh/vagrant/issues/3951#issuecomment-46939471
@@ -31,8 +38,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             v.ssh.private_key_path = ssh_key_path
             v.ssh.port = 22
         end
-        
-        v.vm.synced_folder File.absolute_path("./hhvm/app", ROOT), "/mnt/hhvm"
         
         v.vm.boot_timeout = 300
     end
