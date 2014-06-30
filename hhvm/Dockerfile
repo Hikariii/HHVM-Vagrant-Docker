@@ -49,9 +49,9 @@ ADD ./hhvm.sh /etc/service/hhvm/run
 # set up nginx default site
 ADD ./nginx-default /etc/nginx/sites-available/default
 
-# create a directory with a sample index.hh file
-RUN sudo mkdir -p /mnt/hhvm
-ADD ./app/index.hh /mnt/hhvm/index.hh
+# create a directory with a sample index.php file
+# RUN sudo mkdir -p /mnt/hhvm
+# ADD ./app/index.php /mnt/hhvm/index.php
 
 RUN sudo /usr/share/hhvm/install_fastcgi.sh
 

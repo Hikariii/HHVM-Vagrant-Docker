@@ -16,8 +16,8 @@ server {
 		
 		location / {
 			# First attempt to serve request as file, then
-			# as directory, then fall back to index.hh
-			try_files \$uri \$uri/ /index.hh?\$query_string;
+			# as directory, then fall back to index.php
+			try_files \$uri \$uri/ /index.php?\$query_string;
 			
 			# Uncomment to enable naxsi on this location
 			# include /etc/nginx/naxsi.rules
