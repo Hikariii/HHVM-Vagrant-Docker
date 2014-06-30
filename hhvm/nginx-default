@@ -14,11 +14,6 @@ server {
 
 		charset utf-8;
 		
-		location = /favicon.ico { log_not_found off; access_log off; }
-		location = /robots.txt  { log_not_found off; access_log off; }
-		
-		error_page 404 /index.hh;
-		
 		location / {
 			# First attempt to serve request as file, then
 			# as directory, then fall back to index.hh
@@ -26,6 +21,22 @@ server {
 			
 			# Uncomment to enable naxsi on this location
 			# include /etc/nginx/naxsi.rules
+		}
+		
+		location = /favicon.ico { log_not_found off; access_log off; }
+		location = /robots.txt  { log_not_found off; access_log off; }
+		
+		error_page 404 /index.hh;
+		
+		location ~ \.(hh|php)$ {
+    		fastcgi_keep_conn on;
+			fastcgi_intercept_errors off;
+			
+    		fastcgi_pass   127.0.0.1:9000;
+			
+    		fastcgi_index  index.php;
+    		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    		include        fastcgi_params;
 		}
 		
 		# Deny .htaccess file access

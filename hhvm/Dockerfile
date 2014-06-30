@@ -37,6 +37,12 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mkdir /etc/service/nginx
 ADD ./nginx.sh /etc/service/nginx/run
 
+# set up php ini
+ADD ./php.ini /etc/hhvm/php.ini
+
+# set up hhvm config
+ADD ./server.hdf /etc/hhvm/server.hdf
+
 RUN mkdir /etc/service/hhvm
 ADD ./hhvm.sh /etc/service/hhvm/run
 

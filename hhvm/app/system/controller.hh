@@ -15,7 +15,7 @@ class Controller {
 	}
 	
 	public function loadPlugin(string $name): void {
-		include(APP_DIR .'plugins/'. strtolower($name) .'.php');
+		include(APP_DIR .'plugins/'. strtolower($name));
 	}
 	
 	public function loadHelper(string $name): mixed /* @todo Something, maybe Helper interface */ {
