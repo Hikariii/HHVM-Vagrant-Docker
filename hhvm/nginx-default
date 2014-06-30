@@ -3,7 +3,7 @@ server {
         #listen   [::]:80 default ipv6only=on; ## listen for ipv6
 
         root /mnt/hhvm/;
-        index index.html index.htm index.hh index.php;
+        index index.hh index.php;
 
         # Make site accessible from http://localhost/
         server_name localhost;
@@ -14,16 +14,29 @@ server {
 
 		charset utf-8;
 		
-		location = /favicon.ico { log_not_found off; access_log off; }
-		location = /robots.txt  { log_not_found off; access_log off; }
-		
 		location / {
 			# First attempt to serve request as file, then
-			# as directory, then fall back to index.hh
-			try_files \$uri \$uri/ /index.hh?\$query_string;
+			# as directory, then fall back to index.php
+			try_files \$uri \$uri/ /index.php?\$query_string;
 			
 			# Uncomment to enable naxsi on this location
 			# include /etc/nginx/naxsi.rules
+		}
+		
+		location = /favicon.ico { log_not_found off; access_log off; }
+		location = /robots.txt  { log_not_found off; access_log off; }
+		
+		error_page 404 /index.hh;
+		
+		location ~ \.(hh|php)$ {
+    		fastcgi_keep_conn on;
+			fastcgi_intercept_errors off;
+			
+    		fastcgi_pass   127.0.0.1:9000;
+			
+    		fastcgi_index  index.php;
+    		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    		include        fastcgi_params;
 		}
 		
 		# Deny .htaccess file access
